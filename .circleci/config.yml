@@ -24,3 +24,26 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+version: 2.1
+executors:
+  my-custom-executor:
+    docker:
+      - image: cimg/base:stable
+        auth:
+          # ensure you have first added these secrets
+          # visit app.circleci.com/settings/project/github/ElHelaly/Authenticator/environment-variables
+          username: $DOCKER_HUB_USER
+          password: $DOCKER_HUB_PASSWORD
+jobs:
+  01:
+
+    executor: my-custom-executor
+    steps:
+      - checkout
+      - run: |
+          # echo Hello, World!
+
+workflows:
+  my-custom-workflow:
+    jobs:
+      - 01
